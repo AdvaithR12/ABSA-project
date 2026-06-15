@@ -1,0 +1,93 @@
+# =============================================================================
+# ABSA Telecom Analyzer — Configuration
+# =============================================================================
+# All tunable parameters, file paths, and thresholds in one place.
+# Modify this file without touching code.
+
+# --- Model Paths ---
+models:
+  sentiment_model: "models/best_sentiment_model.pkl"
+  tfidf_vectorizer: "models/tfidf_vectorizer.pkl"
+  label_encoder: "models/sentiment_label_encoder.pkl"
+  naive_bayes: "models/naive_bayes_model.pkl"
+  sgd_svm: "models/sgd_svm_model.pkl"
+  aspect_classifier: "models/aspect_classifier.pkl"
+  aspect_mlb: "models/aspect_mlb.pkl"
+  aspect_tfidf: "models/aspect_tfidf.pkl"
+
+# --- Data Paths ---
+data:
+  raw_dataset: "data/raw/absa_dataset.csv"
+  raw_feedback: "data/raw/raw_feedback.csv"
+  processed_dataset: "data/processed/absa_processed.csv"
+  feature_engineered: "data/processed/absa_feature_engineered.csv"
+
+# --- Inference Thresholds ---
+inference:
+  # VADER correction fires when model confidence is below this
+  vader_correction_threshold: 0.60
+  vader_negative_score: -0.3
+  vader_positive_score: 0.3
+
+  # Domain lexicon correction thresholds
+  domain_neutral_override_threshold: 0.65
+  domain_strong_override_threshold: 0.75
+  domain_positive_wrong_threshold: 0.60
+
+  # ML aspect classifier probability threshold
+  aspect_ml_threshold: 0.40
+
+# --- Preprocessing ---
+preprocessing:
+  # Words to keep despite being in stopword list (important for sentiment)
+  keep_words: ["not", "no", "nor", "never"]
+  # Slang/noise words to remove
+  noise_words: ["lol", "bruh", "fr", "u", "ur", "pls", "plz"]
+
+# --- Training Hyperparameters (for reference/reproducibility) ---
+training:
+  sentiment_model:
+    algorithm: "LogisticRegression"
+    C: 0.5
+    solver: "saga"
+    penalty: "l2"
+    max_iter: 3000
+    random_state: 42
+  
+  aspect_classifier:
+    algorithm: "OneVsRest LogisticRegression"
+    C: 2.0
+    solver: "lbfgs"
+    max_iter: 3000
+    class_weight: "balanced"
+    random_state: 42
+  
+  tfidf:
+    ngram_range: [1, 2]
+    min_df: 2
+    max_df: 0.95
+    sublinear_tf: true
+  
+  aspect_tfidf:
+    ngram_range: [1, 3]
+    min_df: 2
+    max_df: 0.95
+    sublinear_tf: true
+    max_features: 15000
+
+  test_size: 0.20
+  validation_size: 0.20
+  smote: true
+  random_state: 42
+
+# --- Logging ---
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(name)s | %(levelname)s | %(message)s"
+  file: "logs/absa_inference.log"
+
+# --- Streamlit App ---
+app:
+  page_title: "ABSA Telecom Analyzer"
+  page_icon: "📡"
+  layout: "wide"

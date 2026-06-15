@@ -1,0 +1,30 @@
+# ===== ABSA Telecom Analyzer - Dependencies =====
+# Install all: pip install -r requirements.txt
+
+# --- Core ML & Data ---
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.0.0
+scipy>=1.10.0
+imbalanced-learn==0.12.4
+joblib>=1.3.0
+
+# --- NLP ---
+nltk>=3.8.0
+
+# --- Deep Learning (DistilBERT) ---
+torch>=2.0.0
+transformers>=4.30.0
+
+# --- Web App ---
+streamlit>=1.28.0
+plotly>=5.15.0
+
+# --- Visualization (Notebooks) ---
+matplotlib>=3.7.0
+seaborn>=0.12.0
+wordcloud>=1.9.0
+
+# --- Utilities ---
+pyyaml>=5.4.0
+psutil>=5.9.0
