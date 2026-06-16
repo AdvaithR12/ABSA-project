@@ -90,5 +90,5 @@ logging:
 # --- Streamlit App ---
 app:
   page_title: "ABSA Telecom Analyzer"
-  page_icon: "📡"
+  page_icon: "🧠"
   layout: "wide"

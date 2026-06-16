@@ -10,11 +10,16 @@ from model_utils import (
     ASPECT_KEYWORDS, SENTIMENT_COLORS, AVAILABLE_MODELS,
     get_sentiment_score, get_overall_sentiment, get_available_models
 )
+from src.config import load_config
+
+# --- Load config ---
+_cfg = load_config()
+APP_ICON = _cfg.get('app', {}).get('page_icon', '🧠')
 
 # --- Page Configuration ---
 st.set_page_config(
     page_title="ABSA Telecom Analyzer",
-    page_icon="📡",
+    page_icon=APP_ICON,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -362,9 +367,9 @@ def get_badge_html(sentiment):
 # --- SIDEBAR ---
 def render_sidebar():
     with st.sidebar:
-        st.markdown("""
+        st.markdown(f"""
         <div class="sidebar-logo">
-            <div class="sidebar-logo-icon">📡</div>
+            <div class="sidebar-logo-icon">{APP_ICON}</div>
             <div>
                 <div class="sidebar-logo-text">ABSA</div>
             </div>
