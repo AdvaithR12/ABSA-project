@@ -7,10 +7,16 @@
 4. [Preprocessing Decisions](#preprocessing-decisions)
 5. [Feature Engineering](#feature-engineering)
 6. [Model Development](#model-development)
-   - 6.5 [ML-Based Aspect Classifier](#65-ml-based-aspect-classifier)
-   - 6.6 [Runtime Inference Enhancements](#66-runtime-inference-enhancements)
-   - 6.7 [Model Limitations](#67-model-limitations)
-   - 6.8 [Model Files Summary](#68-model-files-summary)
+   - 6.1 [Models Selected](#61-models-selected)
+   - 6.2 [Comparison Results](#62-comparison-results)
+   - 6.3 [Best Model: DistilBERT](#63-best-model-distilbert)
+   - 6.4 [Default Model: Tuned Logistic Regression](#64-default-model-tuned-logistic-regression)
+   - 6.5 [Why Each Model Was Selected](#65-why-each-model-was-selected)
+   - 6.6 [DistilBERT Fine-tuning Details](#66-distilbert-fine-tuning-details)
+   - 6.7 [ML-Based Aspect Classifier](#67-ml-based-aspect-classifier)
+   - 6.8 [Runtime Inference Enhancements](#68-runtime-inference-enhancements)
+   - 6.9 [Model Limitations](#69-model-limitations)
+   - 6.10 [Model Files Summary](#610-model-files-summary)
 7. [Issues Identified & Fixes Applied](#issues-identified--fixes-applied)
 8. [Error Analysis](#error-analysis)
 9. [Final Results](#final-results)
@@ -142,7 +148,7 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 
 ## 6. Model Development
 
-### Models Selected
+### 6.1. Models Selected
 
 | Model | Type | Why Selected |
 |-------|------|-------------|
@@ -151,7 +157,7 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 | SGD-SVM (modified_huber) | Linear SVM via SGD | Scales well, no convergence issues, probability-capable |
 | DistilBERT (fine-tuned) | Transformer | Contextual embeddings handle negation, word order, and implicit sentiment natively |
 
-### Comparison Results (Test Set)
+### 6.2. Comparison Results (Test Set)
 
 +--------------+----------+--------+---------+---------------+----------------+--------+
 | Model        | Train F1 | Val F1 | Test F1 | Train Time    | Inference Time | Memory |
@@ -162,19 +168,19 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 | SGD-SVM      | 0.909    | 0.812  | 0.826   | 0.57 s        | 0.001 s        | 0.5 MB |
 +--------------+----------+--------+---------+---------------+----------------+--------+
 
-### Best Model: DistilBERT (F1: 95.7%)
+### 6.3. Best Model: DistilBERT (F1: 95.7%)
 - Fine-tuned `distilbert-base-uncased` with 3-class sentiment head
 - Input format: `[Aspect Name] raw feedback text` (max 128 tokens)
 - Handles negation, implicit sentiment, and sarcasm natively
 - Requires `torch` and `transformers` packages; ~50ms inference per aspect
 
-### Default Model: Tuned Logistic Regression (F1: 84.4%)
+### 6.4. Default Model: Tuned Logistic Regression (F1: 84.4%)
 - Parameters: C=0.5, solver='lbfgs', penalty='l2', max_iter=3000, class_weight='balanced'
 - Best CV F1: 0.841
 - Test F1: 0.844 (slight negative gap = no overfitting)
 - Used as default due to fast inference (~2ms) and no GPU/torch dependency
 
-### Why Each Model Was Selected
+### 6.5. Why Each Model Was Selected
 
 **Logistic Regression:** Strong baseline for text classification. Handles high-dimensional sparse TF-IDF features efficiently. Supports `class_weight='balanced'` natively. Highly interpretable — feature coefficients reveal which words drive each sentiment.
 
@@ -184,7 +190,7 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 
 **DistilBERT:** Contextual embeddings capture word order, negation, and implicit sentiment — all weaknesses of TF-IDF models. Despite the smaller dataset (13,100 samples), the transformer significantly outperformed linear models (95.7% vs 84.4% F1).
 
-### DistilBERT Fine-tuning Details
+### 6.6. DistilBERT Fine-tuning Details
 
 - **Base model:** `distilbert-base-uncased` (66M parameters, 6 transformer layers)
 - **Task head:** Linear classifier for 3-class sentiment (Negative, Neutral, Positive)
@@ -199,23 +205,23 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 
 ---
 
-## 6.5. ML-Based Aspect Classifier
+### 6.7. ML-Based Aspect Classifier
 
-### Problem
+#### Problem
 The keyword-based aspect detection (`ASPECT_KEYWORDS`) missed implicit mentions:
 - "The mobile application takes too long to load" → General (should be Mobile App Experience)
 - "Number transfer was smooth" → General (should be Number Portability)
 - "Text messages arrive hours late" → General (should be SMS Services)
 - "Data runs out too quickly" → General (should be Data Balance)
 
-### Solution
+#### Solution
 A multi-label OneVsRest Logistic Regression classifier trained on the 13,100-sample dataset:
 - **Input:** TF-IDF vectors with trigrams (ngram_range 1-3, max_features=15,000)
 - **Output:** Binary prediction for each of 22 aspects (multi-label)
 - **Architecture:** OneVsRestClassifier wrapping LogisticRegression (C=2.0, balanced class weights)
 - **Training data:** 6,750 unique feedback samples grouped by feedback_id with multi-label aspect lists
 
-### Performance
+#### Performance
 | Metric | Score |
 |--------|-------|
 | Micro F1 | 0.930 |
@@ -223,7 +229,7 @@ A multi-label OneVsRest Logistic Regression classifier trained on the 13,100-sam
 | Samples F1 | 0.958 |
 
 
-### Edge Case Results
+#### Edge Case Results
 | Feedback | Keywords | ML Classifier |
 |----------|----------|---------------|
 | "The mobile application takes too long to load" | General | Mobile App Experience (0.89) |
@@ -234,19 +240,19 @@ A multi-label OneVsRest Logistic Regression classifier trained on the 13,100-sam
 
 ---
 
-## 6.6. Runtime Inference Enhancements
+### 6.8. Runtime Inference Enhancements
 
 Post-training enhancements in the prediction pipeline (`model_utils.py`) that address the TF-IDF model's weaknesses without modifying the trained sentiment model.
 
-### Clause-Level Splitting
+#### Clause-Level Splitting
 Splits input on contrastive conjunctions (`but`, `however`, `though`, `although`, `yet`, `while`, `whereas`, `nevertheless`) so each aspect is matched only to the clause(s) that mention it. Adjacent clause inclusion handles cases where the contrastive clause implicitly refers to the same aspect.
 
-### VADER Sentiment Correction (Layer 1)
+#### VADER Sentiment Correction (Layer 1)
 VADER (rule-based lexicon) corrects when model confidence is low (<60%):
 - VADER ≤ -0.3 → override to Negative
 - VADER ≥ +0.3 → override to Positive
 
-### Domain-Aware Sentiment Lexicon (Layers 2-4)
+#### Domain-Aware Sentiment Lexicon (Layers 2-4)
 A telecom-specific phrase lexicon with regex patterns catches language VADER scores as neutral:
 - **16 positive patterns:** "seamless", "hassle-free", "completed within [time]", "resolved quickly", etc.
 - **21 negative patterns:** "too long/slow/expensive", "took forever", "crashes", "never resolved", "no signal", etc.
@@ -257,7 +263,7 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 | Layer 3 | Model=Neutral, confidence<0.75, domain signal strong | Override without VADER agreement |
 | Layer 4 | Model=Positive, confidence<0.60, domain=negative | Override to Negative |
 
-### Evaluation Results (51 samples)
+#### Evaluation Results (51 samples)
 
 | Metric | Before Enhancements | After Enhancements |
 |--------|--------------------|--------------------|
@@ -267,7 +273,7 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 | Negative recall | 68.8% | **100%** |
 | Positive recall | 82.6% | **100%** |
 
-### Design Rationale
+#### Design Rationale
 - **Non-destructive:** The trained model is never modified. Enhancements are purely at inference time.
 - **Layered and conservative:** Each correction layer has an increasing confidence threshold (0.60 → 0.65 → 0.75).
 - **Fallback-safe:** If ML models don't exist on disk, the system gracefully falls back to keyword-only aspect detection.
@@ -275,9 +281,9 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 
 ---
 
-## 6.7. Model Limitations
+### 6.9. Model Limitations
 
-### TF-IDF Sentiment Model Limitations
+#### TF-IDF Sentiment Model Limitations
 1. **Single-sentence multi-aspect ambiguity** — When two aspects with opposing sentiments appear in the same sentence, the TF-IDF model cannot isolate which words apply to which aspect.
 2. **Negation handling is limited** — TF-IDF doesn't understand word order. "Not good" and "good not" produce the same features.
 3. **Sarcasm and irony** — "Great, another outage. Exactly what I needed today." reads as positive on surface features.
@@ -285,12 +291,12 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 5. **Domain-specific only** — Won't generalize to other domains without retraining.
 6. **Implicit sentiment** — Phrases like "took forever", "runs out quickly" lack explicit sentiment words.
 
-### Aspect Identification Limitations
+#### Aspect Identification Limitations
 1. **Keyword-dependent** — Regex patterns require manual updates for new terminology.
 2. **Implicit aspect detection gaps** — ML classifier mitigates but doesn't fully solve.
 3. **Over-detection on generic words** — "plan", "call", "speed" may trigger aspects in non-relevant contexts.
 
-### DistilBERT Limitations
+#### DistilBERT Limitations
 1. **Inference speed** — ~50ms per aspect vs ~2ms for TF-IDF models.
 2. **Model size** — 257 MB vs ~5 MB for all sklearn models combined.
 3. **Dependency weight** — Requires `torch` (~2GB) and `transformers` packages.
@@ -298,11 +304,11 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 
 ---
 
-## 6.8. Model Files Summary
+### 6.10. Model Files Summary
 
 | File | Purpose | Size |
 |------|---------|------|
-| `models/best_sentiment_model.pkl` | Tuned LR sentiment classifier (C=0.5, saga, l2) | 284 KB |
+| `models/best_sentiment_model.pkl` | Tuned LR sentiment classifier (C=0.5, lbfgs, l2) | 284 KB |
 | `models/tfidf_vectorizer.pkl` | TF-IDF vectorizer (bigrams, ~12k vocab) | 336 KB |
 | `models/sentiment_label_encoder.pkl` | LabelEncoder (Negative=0, Neutral=1, Positive=2) | <1 KB |
 | `models/naive_bayes_model.pkl` | Alternative NB model | 568 KB |
@@ -430,7 +436,7 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 - Both balanced and unweighted class_weight tested
 - 5-fold stratified cross-validation
 
-**Result:** Found C=0.5 with saga solver — marginal improvement but confirms the model is well-tuned.
+**Result:** Found C=0.5 with lbfgs solver — marginal improvement but confirms the model is well-tuned.
 
 ---
 
