@@ -49,9 +49,10 @@ training:
   sentiment_model:
     algorithm: "LogisticRegression"
     C: 0.5
-    solver: "saga"
+    solver: "lbfgs"
     penalty: "l2"
     max_iter: 3000
+    class_weight: "balanced"
     random_state: 42
   
   aspect_classifier:

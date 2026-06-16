@@ -73,7 +73,7 @@ Raw Feedback
 ```
 
 **DistilBERT Model:** Fine-tuned `distilbert-base-uncased` for 3-class sentiment
-- Test F1: **96.1%** (weighted)
+- Test F1: **95.7%** (weighted)
 - Processes raw text directly (no TF-IDF preprocessing needed)
 - No VADER/domain corrections required — the transformer handles negation and implicit sentiment natively
 - Requires `torch` and `transformers` packages
@@ -302,7 +302,7 @@ jupyter notebook notebooks/models.ipynb
 
 | Model | Test F1 | Train Time | Inference Time | Memory |
 |-------|---------|-----------|---------------|--------|
-| **DistilBERT (fine-tuned)** | **0.961** | ~25min (GPU) | ~50ms | 257 MB |
+| **DistilBERT (fine-tuned)** | **0.957** | ~25min (GPU) | ~50ms | 257 MB |
 | Tuned Logistic Regression | 0.844 | 6.75s | 0.002s | 11.6 MB |
 | Naive Bayes | 0.840 | 0.01s | 0.002s | 1.4 MB |
 | SGD-SVM | 0.826 | 0.55s | 0.001s | 0.5 MB |

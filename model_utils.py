@@ -104,8 +104,8 @@ AVAILABLE_MODELS = {
     },
     'DistilBERT': {
         'file': 'models/distilbert_sentiment',
-        'description': 'Transformer model (F1: 96.1%)',
-        'f1': '96.1%',
+        'description': 'Transformer model (F1: 95.7%)',
+        'f1': '95.7%',
         'type': 'distilbert'
     }
 }

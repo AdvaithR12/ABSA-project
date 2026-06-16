@@ -26,7 +26,7 @@
 
 **Dataset:** Synthetically generated telecom customer feedback covering 22 aspect categories across 6,750 unique feedback entries (13,100 aspect-level rows).
 
-**Best Model:** Fine-tuned DistilBERT achieving **96.1% weighted F1** on the test set.
+**Best Model:** Fine-tuned DistilBERT achieving **95.7% weighted F1** on the test set.
 **Default Model:** Tuned Logistic Regression achieving **84.4% weighted F1** (fast inference, no GPU dependency).
 
 ---
@@ -34,7 +34,7 @@
 ## 2. Data Pipeline
 
 ### Data Generation
-- 100 original batches generated via Groq API (`batchRunner.py`)
+- 135 total batches generated via Groq API (100 initial + 35 Neutral-focused augmentation)
 - Each batch: 50 feedback entries with multiple aspects per feedback
 - Sentiment mix varied across batches (balanced, mostly negative, mostly positive)
 
@@ -122,8 +122,17 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 - This tells the model WHICH aspect the sentiment applies to — making it true ABSA
 
 ### SMOTE Oversampling
-- Applied to balance the minority class (Negative: 2,615 → 2,997 via synthetic samples)
-- All three classes equalized to 2,997 samples each in training
+- Applied **only to Naive Bayes** training to equalize the minority class (all classes → 2,997 samples each)
+- Logistic Regression and SGD-SVM use `class_weight='balanced'` instead (adjusts loss function weights inversely proportional to class frequency)
+- These are alternative strategies for handling class imbalance — they are not combined on the same model
+
+| Model | Balancing Strategy |
+|-------|-------------------|
+| Naive Bayes | SMOTE (synthetic oversampling on training data) |
+| Logistic Regression | `class_weight='balanced'` (cost-sensitive learning) |
+| SGD-SVM | `class_weight='balanced'` (cost-sensitive learning) |
+| DistilBERT | None (near-balanced distribution; cross-entropy loss) |
+
 
 ### Train/Test Split
 - 80% train / 20% test (stratified)
@@ -144,21 +153,23 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 
 ### Comparison Results (Test Set)
 
-| Model | Train F1 | Val F1 | Test F1 | Train Time | Inference Time | Memory |
-|-------|----------|--------|---------|------------|---------------|--------|
-| DistilBERT | — | — | **0.961** | ~25min (GPU) | ~50ms | 257 MB |
-| Tuned LR | 0.880 | 0.838 | 0.844 | 7.7s | 0.002s | 11.6 MB |
-| Naive Bayes | 0.864 | 0.841 | 0.840 | 0.01s | 0.002s | 1.4 MB |
-| SGD-SVM | 0.909 | 0.812 | 0.826 | 0.57s | 0.001s | 0.5 MB |
++--------------+----------+--------+---------+---------------+----------------+--------+
+| Model        | Train F1 | Val F1 | Test F1 | Train Time    | Inference Time | Memory |
++--------------+----------+--------+---------+---------------+----------------+--------+
+| DistilBERT   | 0.970    | 0.960  | 0.957   | ~25 min (GPU) | ~50 ms         | 257 MB |
+| Tuned LR     | 0.880    | 0.838  | 0.844   | 7.7 s         | 0.002 s        | 11.6 MB|
+| Naive Bayes  | 0.864    | 0.841  | 0.840   | 0.01 s        | 0.002 s        | 1.4 MB |
+| SGD-SVM      | 0.909    | 0.812  | 0.826   | 0.57 s        | 0.001 s        | 0.5 MB |
++--------------+----------+--------+---------+---------------+----------------+--------+
 
-### Best Model: DistilBERT (F1: 96.1%)
+### Best Model: DistilBERT (F1: 95.7%)
 - Fine-tuned `distilbert-base-uncased` with 3-class sentiment head
 - Input format: `[Aspect Name] raw feedback text` (max 128 tokens)
 - Handles negation, implicit sentiment, and sarcasm natively
 - Requires `torch` and `transformers` packages; ~50ms inference per aspect
 
 ### Default Model: Tuned Logistic Regression (F1: 84.4%)
-- Parameters: C=0.5, solver='saga', penalty='l2', max_iter=3000
+- Parameters: C=0.5, solver='lbfgs', penalty='l2', max_iter=3000, class_weight='balanced'
 - Best CV F1: 0.841
 - Test F1: 0.844 (slight negative gap = no overfitting)
 - Used as default due to fast inference (~2ms) and no GPU/torch dependency
@@ -171,7 +182,7 @@ Words like "lol", "bruh", "fr" appear inconsistently and don't carry reliable se
 
 **SGD-SVM (modified_huber loss):** Equivalent to a linear SVM but scales better via stochastic gradient descent. No convergence issues unlike standard `LinearSVC`. Provides probability estimates while maintaining SVM-like decision boundaries.
 
-**DistilBERT:** Contextual embeddings capture word order, negation, and implicit sentiment — all weaknesses of TF-IDF models. Despite the smaller dataset (13,100 samples), the transformer significantly outperformed linear models (96.1% vs 84.4% F1).
+**DistilBERT:** Contextual embeddings capture word order, negation, and implicit sentiment — all weaknesses of TF-IDF models. Despite the smaller dataset (13,100 samples), the transformer significantly outperformed linear models (95.7% vs 84.4% F1).
 
 ### DistilBERT Fine-tuning Details
 
@@ -211,14 +222,6 @@ A multi-label OneVsRest Logistic Regression classifier trained on the 13,100-sam
 | Macro F1 | 0.930 |
 | Samples F1 | 0.958 |
 
-### Integration Logic
-The ML classifier works alongside keywords, not replacing them:
-1. First run keyword matching → get `keyword_aspects`
-2. Run ML classifier → get aspects with probability > 0.4
-3. Merge logic:
-   - If keywords found "General" but ML found specific aspects → use ML results
-   - If keywords found specific aspects → merge keyword + ML results (union)
-   - If both found nothing → fall back to "General"
 
 ### Edge Case Results
 | Feedback | Keywords | ML Classifier |
@@ -330,7 +333,7 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 
 ---
 
-### Issue 2: Aspect Feature Missing (Not True ABSA)
+### Issue 2: Aspect Feature Missing
 
 **Observation:** Original model only used `processed_text` as input — it was a general sentiment classifier, not ABSA.
 
@@ -352,7 +355,7 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 **Root Cause:** Default LinearSVC with C=1 on SMOTE data was too complex. Also had convergence warnings.
 
 **Fix Applied:**
-- Switched to SGDClassifier with `modified_huber` loss (no convergence issues)
+- Switched to SGDClassifier with `modified_huber` loss
 - Increased `max_iter` to 5000
 - Used `class_weight='balanced'` instead of SMOTE for SVM
 - Broader hyperparameter search with RandomizedSearchCV
@@ -415,31 +418,8 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 
 ---
 
-### Issue 8: No Hardware Usage Tracking
 
-**Observation:** Requirements demanded hardware metrics but none were reported.
-
-**Fix Applied:**
-- Added `psutil` for process memory (RSS) and CPU percentage tracking
-- Added `tracemalloc` for peak memory allocation during model training
-- System info header (CPU cores, total RAM, available RAM)
-- All metrics included in comparison table
-
----
-
-### Issue 9: No Aspect Identification Capability
-
-**Observation:** Requirements stated the model must "identify relevant aspects from customer feedback" — but original model assumed aspects were pre-given.
-
-**Fix Applied:**
-- Built keyword-based aspect identification system with 22 aspect categories
-- Each aspect has 5-8 domain-specific regex patterns
-- Evaluated on 500 labeled samples: Precision 72.5%, Recall 84.2%, F1 78.0%
-- Integrated into end-to-end `predict_absa()` pipeline
-
----
-
-### Issue 10: Narrow Hyperparameter Search
+### Issue 8: Narrow Hyperparameter Search
 
 **Observation:** Original GridSearchCV only tested 4 values of C with a single solver. Best params were defaults.
 
@@ -492,18 +472,6 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 
 ## 9. Final Results
 
-### Publishing Criteria Assessment
-
-| Criteria | Target | Achieved | Status |
-|----------|--------|----------|--------|
-| Weighted F1 on test | > 0.80 | 0.961 (DistilBERT), 0.844 (LR) | ✅ Pass |
-| Neutral recall | > 0.50 | 0.858 (LR) | ✅ Pass |
-| CV-Test gap | < 0.05 | -0.003 (LR) | ✅ Pass (no overfitting) |
-| At least 2 models compared | Yes | 4 models | ✅ Pass |
-| Train/Val/Test metrics | All reported | Full reports | ✅ Pass |
-| Hardware usage | Reported | Memory + CPU | ✅ Pass |
-| Aspect identification | Functional | F1=0.78 (keywords), 0.93 (ML) | ✅ Pass |
-
 ### Per-Class Test Performance (Best Model: Tuned LR)
 
 | Class | Precision | Recall | F1 |
@@ -512,32 +480,14 @@ A telecom-specific phrase lexicon with regex patterns catches language VADER sco
 | Neutral | 0.917 | 0.858 | 0.887 |
 | Positive | 0.830 | 0.831 | 0.831 |
 
-### Before vs After Comparison
-
-| Metric | Before (original) | After (final) | Improvement |
-|--------|-------------------|---------------|-------------|
-| Test F1 (weighted) | 0.77 | 0.844 | +9.6% |
-| Neutral Recall | 23% | 85.8% | +63 pp |
-| Neutral F1 | ~0.23 | 0.887 | +0.66 |
-| Overfitting (CV-Test gap) | 6-7% | -0.3% | Eliminated |
-| Aspect used in model | No | Yes | True ABSA |
-| Dataset size | 10,085 | 13,100 | +30% |
-| Sentiment balance | 46/40/13% | 36/33/31% | Balanced |
-
----
-
 ## 10. Recommendations
-
-### Implemented
-- ~~Add clause-level splitting on "but", "however", "though" for intra-sentence mixed sentiment~~ ✅ Done
-- ~~Add VADER/TextBlob sentiment scores as supplementary features~~ ✅ Done (VADER correction layer)
-- ~~Fine-tune BERT/RoBERTa for telecom ABSA~~ ✅ Done (DistilBERT, F1: 96.1%)
-- ~~Implement prediction confidence threshold~~ ✅ Done (confidence displayed in app)
 
 ### Immediate Improvements
 1. Expand International Calling keywords: add `r'\binternational calling\b'`
 2. Add "runs out", "depletes", "drains" to negative training examples for Data Balance
 3. Build a "commonly confused" validation set for continuous monitoring
+4. **Emoji sentiment support** — interpret emojis as sentiment signals (👍 → Positive, 😡 → Negative)
+5. **Multilingual aspect identification** — support Hindi, Hinglish, and regional language feedback
 
 ### Medium-Term
 1. Replace TF-IDF with sentence-transformer embeddings for the linear models
