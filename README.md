@@ -91,13 +91,21 @@ Raw Feedback
 ### Prerequisites
 - Python 3.10+
 - pip
+- Git LFS (required for the DistilBERT model)
 
 ### Installation
 
 ```bash
+# Install Git LFS (if not already installed)
+# Ubuntu/Debian:
+sudo apt install git-lfs
+
+# Initialize Git LFS
+git lfs install
+
 # Clone the repository
-git clone <repository-url>
-cd Sentiment-project
+git clone https://github.com/AdvaithR12/ABSA-project.git
+cd ABSA-project
 
 # Create virtual environment
 python3 -m venv .venv
@@ -315,6 +323,8 @@ DistilBERT achieves the highest accuracy but requires GPU for training and has s
 
 ## Future Improvements
 
+- **Emoji sentiment support** — Detect and interpret emojis (👍, 😡, 🔥, etc.) as sentiment signals, which are common in real customer feedback
+- **Multilingual aspect identification** — Support feedback in multiple languages (Hindi, Hinglish, regional languages) for broader Indian telecom coverage
 - **Learned sentiment lexicon** — Auto-extract domain polarity scores from training data
 - **Multi-task model** — Joint aspect detection + sentiment in a single architecture
 - **Real customer data** — Replace synthetic data with production feedback for better generalization
