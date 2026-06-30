@@ -13099,3 +13099,229 @@ fb_06749,"App is functional for recharges and balance checks. Nothing fancy. Add
 fb_06749,"App is functional for recharges and balance checks. Nothing fancy. Additionally, Used international calling pack for calls to UAE. Quality was average.",International Calling,Neutral
 fb_06750,"Device compatibility seems fine. All features work as they should. Also, ISD pack covers my monthly calling needs to family abroad. Sufficient.",Device Compatibility,Neutral
 fb_06750,"Device compatibility seems fine. All features work as they should. Also, ISD pack covers my monthly calling needs to family abroad. Sufficient.",International Calling,Neutral
+fb_06751,"The signal bars show full strength, but webpages take forever to load.",Network Coverage,Positive
+fb_06751,"The signal bars show full strength, but webpages take forever to load.",Internet Speed,Negative
+fb_06752,"Internet speed is blazing fast, yet the signal keeps dropping in my apartment.",Internet Speed,Positive
+fb_06752,"Internet speed is blazing fast, yet the signal keeps dropping in my apartment.",Network Coverage,Negative
+fb_06753,"Coverage is spotty indoors, although when it works the download speeds are impressive.",Network Coverage,Negative
+fb_06753,"Coverage is spotty indoors, although when it works the download speeds are impressive.",Internet Speed,Positive
+fb_06754,"The network reaches everywhere now, but the browsing speed has gotten worse.",Network Coverage,Positive
+fb_06754,"The network reaches everywhere now, but the browsing speed has gotten worse.",Internet Speed,Negative
+fb_06755,"Full bars on my phone, yet I cannot load a single webpage.",Network Coverage,Positive
+fb_06755,"Full bars on my phone, yet I cannot load a single webpage.",Internet Speed,Negative
+fb_06756,"Downloads finish in seconds, but the signal disappears every few minutes.",Internet Speed,Positive
+fb_06756,"Downloads finish in seconds, but the signal disappears every few minutes.",Network Coverage,Negative
+fb_06757,"Call clarity is excellent, but I lose connection whenever I move between rooms.",Call Quality,Positive
+fb_06757,"Call clarity is excellent, but I lose connection whenever I move between rooms.",Network Coverage,Negative
+fb_06758,"The signal is strong everywhere, however voice calls echo badly.",Network Coverage,Positive
+fb_06758,"The signal is strong everywhere, however voice calls echo badly.",Call Quality,Negative
+fb_06759,"Coverage is unreliable, though when connected the call quality is surprisingly good.",Network Coverage,Negative
+fb_06759,"Coverage is unreliable, though when connected the call quality is surprisingly good.",Call Quality,Positive
+fb_06760,"Crystal clear voice quality, yet the call drops if I step outside.",Call Quality,Positive
+fb_06760,"Crystal clear voice quality, yet the call drops if I step outside.",Network Coverage,Negative
+fb_06761,"I have signal everywhere, but every conversation sounds like it's underwater.",Network Coverage,Positive
+fb_06761,"I have signal everywhere, but every conversation sounds like it's underwater.",Call Quality,Negative
+fb_06762,"The support agent was helpful, but my billing issue still hasn't been resolved.",Customer Support,Positive
+fb_06762,"The support agent was helpful, but my billing issue still hasn't been resolved.",Billing,Negative
+fb_06763,"My bill was corrected quickly, although the support experience was frustrating.",Billing,Positive
+fb_06763,"My bill was corrected quickly, although the support experience was frustrating.",Customer Support,Negative
+fb_06764,"Support responded within minutes, yet they charged me for the service call.",Customer Support,Positive
+fb_06764,"Support responded within minutes, yet they charged me for the service call.",Billing,Negative
+fb_06765,"The billing is always accurate, but getting someone on the phone takes ages.",Billing,Positive
+fb_06765,"The billing is always accurate, but getting someone on the phone takes ages.",Customer Support,Negative
+fb_06766,"The agent was knowledgeable, however the extra charge on my bill remains unexplained.",Customer Support,Positive
+fb_06766,"The agent was knowledgeable, however the extra charge on my bill remains unexplained.",Billing,Negative
+fb_06767,"My invoice is always correct, yet the support staff gives conflicting information.",Billing,Positive
+fb_06767,"My invoice is always correct, yet the support staff gives conflicting information.",Customer Support,Negative
+fb_06768,"The price is low, but you get what you pay for with very limited features.",Pricing,Positive
+fb_06768,"The price is low, but you get what you pay for with very limited features.",Value for Money,Negative
+fb_06769,"It is expensive, yet the service quality makes it worthwhile.",Pricing,Negative
+fb_06769,"It is expensive, yet the service quality makes it worthwhile.",Value for Money,Positive
+fb_06770,"The monthly cost is reasonable, however the data cap makes it poor value.",Pricing,Positive
+fb_06770,"The monthly cost is reasonable, however the data cap makes it poor value.",Value for Money,Negative
+fb_06771,"The package costs a lot, but includes everything I need and more.",Pricing,Negative
+fb_06771,"The package costs a lot, but includes everything I need and more.",Value for Money,Positive
+fb_06772,"Affordable plans available, but none of them offer enough data to be useful.",Pricing,Positive
+fb_06772,"Affordable plans available, but none of them offer enough data to be useful.",Value for Money,Negative
+fb_06773,"Roaming data worked perfectly abroad, but international calls were terrible.",Roaming,Positive
+fb_06773,"Roaming data worked perfectly abroad, but international calls were terrible.",International Calling,Negative
+fb_06774,"International calls are crystal clear, although the roaming charges are shocking.",International Calling,Positive
+fb_06774,"International calls are crystal clear, although the roaming charges are shocking.",Roaming,Negative
+fb_06775,"I could browse freely while traveling, yet calling home was nearly impossible.",Roaming,Positive
+fb_06775,"I could browse freely while traveling, yet calling home was nearly impossible.",International Calling,Negative
+fb_06776,"Calling overseas is cheap and clear, but data roaming costs a fortune.",International Calling,Positive
+fb_06776,"Calling overseas is cheap and clear, but data roaming costs a fortune.",Roaming,Negative
+fb_06777,"The app interface is beautiful, but it always fails when I try to pay my bill.",Mobile App Experience,Positive
+fb_06777,"The app interface is beautiful, but it always fails when I try to pay my bill.",Billing,Negative
+fb_06778,"Paying through the app is seamless, although the app itself crashes frequently.",Billing,Positive
+fb_06778,"Paying through the app is seamless, although the app itself crashes frequently.",Mobile App Experience,Negative
+fb_06779,"The app loads instantly, however the billing section shows incorrect amounts.",Mobile App Experience,Positive
+fb_06779,"The app loads instantly, however the billing section shows incorrect amounts.",Billing,Negative
+fb_06780,"Bill payment works flawlessly in the app, yet the rest of the app is painfully slow.",Billing,Positive
+fb_06780,"Bill payment works flawlessly in the app, yet the rest of the app is painfully slow.",Mobile App Experience,Negative
+fb_06781,"My SIM was activated in minutes, but the support staff was rude throughout.",SIM Activation,Positive
+fb_06781,"My SIM was activated in minutes, but the support staff was rude throughout.",Customer Support,Negative
+fb_06782,"The support team was incredibly patient, yet my activation took over a week.",Customer Support,Positive
+fb_06782,"The support team was incredibly patient, yet my activation took over a week.",SIM Activation,Negative
+fb_06783,"Activation was instant, however nobody told me about the required documents beforehand.",SIM Activation,Positive
+fb_06783,"Activation was instant, however nobody told me about the required documents beforehand.",Customer Support,Negative
+fb_06784,"Speed is great during the day, but becomes unusable during evening peak hours.",Internet Speed,Positive
+fb_06784,"Speed is great during the day, but becomes unusable during evening peak hours.",Network Congestion,Negative
+fb_06785,"The network handles congestion well, although base speeds are below average.",Network Congestion,Positive
+fb_06785,"The network handles congestion well, although base speeds are below average.",Internet Speed,Negative
+fb_06786,"Morning downloads are fast, yet everything crawls to a halt after 6 PM.",Internet Speed,Positive
+fb_06786,"Morning downloads are fast, yet everything crawls to a halt after 6 PM.",Network Congestion,Negative
+fb_06787,"Peak hour performance improved, but off-peak speeds actually got slower.",Network Congestion,Positive
+fb_06787,"Peak hour performance improved, but off-peak speeds actually got slower.",Internet Speed,Negative
+fb_06788,"The streaming bundle is excellent, but adds too much to the monthly cost.",OTT Bundle Services,Positive
+fb_06788,"The streaming bundle is excellent, but adds too much to the monthly cost.",Pricing,Negative
+fb_06789,"The price includes streaming, however the content library is very limited.",Pricing,Positive
+fb_06789,"The price includes streaming, however the content library is very limited.",OTT Bundle Services,Negative
+fb_06790,"The OTT content is world-class, yet it makes the plan unaffordable.",OTT Bundle Services,Positive
+fb_06790,"The OTT content is world-class, yet it makes the plan unaffordable.",Pricing,Negative
+fb_06791,"Cheap streaming included, but the shows are outdated and the selection is tiny.",Pricing,Positive
+fb_06791,"Cheap streaming included, but the shows are outdated and the selection is tiny.",OTT Bundle Services,Negative
+fb_06792,"The data allowance is generous, but expires before I can use half of it.",Data Balance,Positive
+fb_06792,"The data allowance is generous, but expires before I can use half of it.",Data Validity,Negative
+fb_06793,"The validity period is long, although the data cap is too restrictive.",Data Validity,Positive
+fb_06793,"The validity period is long, although the data cap is too restrictive.",Data Balance,Negative
+fb_06794,"I get plenty of data, yet the short validity means most goes to waste.",Data Balance,Positive
+fb_06794,"I get plenty of data, yet the short validity means most goes to waste.",Data Validity,Negative
+fb_06795,"The 90-day validity is great, but 2GB for three months is laughable.",Data Validity,Positive
+fb_06795,"The 90-day validity is great, but 2GB for three months is laughable.",Data Balance,Negative
+fb_06796,"The recharge options are flexible, but every good plan is overpriced.",Recharge Plans,Positive
+fb_06796,"The recharge options are flexible, but every good plan is overpriced.",Pricing,Negative
+fb_06797,"Prices are competitive, however the recharge process is confusing.",Pricing,Positive
+fb_06797,"Prices are competitive, however the recharge process is confusing.",Recharge Plans,Negative
+fb_06798,"So many recharge options to choose from, yet all the affordable ones lack data.",Recharge Plans,Positive
+fb_06798,"So many recharge options to choose from, yet all the affordable ones lack data.",Pricing,Negative
+fb_06799,"5G speeds are incredible, but my phone heats up excessively while using it.",5G Experience,Positive
+fb_06799,"5G speeds are incredible, but my phone heats up excessively while using it.",Device Compatibility,Negative
+fb_06800,"My device handles the network well, although 5G coverage barely exists here.",Device Compatibility,Positive
+fb_06800,"My device handles the network well, although 5G coverage barely exists here.",5G Experience,Negative
+fb_06801,"The 5G experience is phenomenal, yet half the phones in the market are incompatible.",5G Experience,Positive
+fb_06801,"The 5G experience is phenomenal, yet half the phones in the market are incompatible.",Device Compatibility,Negative
+fb_06802,"The outage was brief, but nobody informed us it was happening.",Network Outage,Neutral
+fb_06802,"The outage was brief, but nobody informed us it was happening.",Customer Support,Negative
+fb_06803,"Support kept us updated throughout, even though the outage lasted all day.",Customer Support,Positive
+fb_06803,"Support kept us updated throughout, even though the outage lasted all day.",Network Outage,Negative
+fb_06804,"The outage disrupted my work completely, though support resolved it quickly.",Network Outage,Negative
+fb_06804,"The outage disrupted my work completely, though support resolved it quickly.",Customer Support,Positive
+fb_06805,"They fixed the outage fast, but the lack of advance warning was unacceptable.",Network Outage,Positive
+fb_06805,"They fixed the outage fast, but the lack of advance warning was unacceptable.",Customer Support,Negative
+fb_06806,"The porting process was smooth, but activating the new SIM took days.",Number Portability,Positive
+fb_06806,"The porting process was smooth, but activating the new SIM took days.",SIM Activation,Negative
+fb_06807,"My SIM activated instantly, however the number transfer failed twice.",SIM Activation,Positive
+fb_06807,"My SIM activated instantly, however the number transfer failed twice.",Number Portability,Negative
+fb_06808,"Number porting completed in hours, yet the new SIM had no data for two days.",Number Portability,Positive
+fb_06808,"Number porting completed in hours, yet the new SIM had no data for two days.",SIM Activation,Negative
+fb_06809,"Text messages are always reliable, but the app never sends notifications properly.",SMS Services,Positive
+fb_06809,"Text messages are always reliable, but the app never sends notifications properly.",Mobile App Experience,Negative
+fb_06810,"The app notifications work perfectly, although SMS delivery has been unreliable lately.",Mobile App Experience,Positive
+fb_06810,"The app notifications work perfectly, although SMS delivery has been unreliable lately.",SMS Services,Negative
+fb_06811,"The postpaid plan has great benefits, but the billing cycle is confusing.",Postpaid Plans,Positive
+fb_06811,"The postpaid plan has great benefits, but the billing cycle is confusing.",Billing,Negative
+fb_06812,"Bills arrive on time and are clear, however the postpaid plan itself is limited.",Billing,Positive
+fb_06812,"Bills arrive on time and are clear, however the postpaid plan itself is limited.",Postpaid Plans,Negative
+fb_06813,"The postpaid perks are amazing, yet my bill is different every month.",Postpaid Plans,Positive
+fb_06813,"The postpaid perks are amazing, yet my bill is different every month.",Billing,Negative
+fb_06814,"Network coverage improved massively, but the price increase was not justified.",Network Coverage,Positive
+fb_06814,"Network coverage improved massively, but the price increase was not justified.",Pricing,Negative
+fb_06815,"The plan is affordable, yet the network barely works in rural areas.",Pricing,Positive
+fb_06815,"The plan is affordable, yet the network barely works in rural areas.",Network Coverage,Negative
+fb_06816,"5G is available in my city, but the data gets consumed three times faster.",5G Experience,Positive
+fb_06816,"5G is available in my city, but the data gets consumed three times faster.",Data Balance,Negative
+fb_06817,"The mobile app tracks usage well, however it drains my battery significantly.",Mobile App Experience,Positive
+fb_06817,"The mobile app tracks usage well, however it drains my battery significantly.",Device Compatibility,Negative
+fb_06818,"International calls are cheap, but the audio quality is terrible.",International Calling,Positive
+fb_06818,"International calls are cheap, but the audio quality is terrible.",Call Quality,Negative
+fb_06819,"The recharge was easy, but my data balance didn't update for hours.",Recharge Plans,Positive
+fb_06819,"The recharge was easy, but my data balance didn't update for hours.",Data Balance,Negative
+fb_06820,"Streaming works without buffering, yet the app crashes during live content.",OTT Bundle Services,Positive
+fb_06820,"Streaming works without buffering, yet the app crashes during live content.",Mobile App Experience,Negative
+fb_06821,"The postpaid plan includes unlimited calls, but international minutes cost extra.",Postpaid Plans,Positive
+fb_06821,"The postpaid plan includes unlimited calls, but international minutes cost extra.",International Calling,Negative
+fb_06822,"Data validity is generous at 90 days, but the speeds throttle after 50 percent usage.",Data Validity,Positive
+fb_06822,"Data validity is generous at 90 days, but the speeds throttle after 50 percent usage.",Internet Speed,Negative
+fb_06823,"The network handles peak hours fine now, although regular speeds remain disappointing.",Network Congestion,Positive
+fb_06823,"The network handles peak hours fine now, although regular speeds remain disappointing.",Internet Speed,Negative
+fb_06824,The activation completed much faster than I expected.,SIM Activation,Positive
+fb_06825,"Number porting was surprisingly quick, done in under an hour.",Number Portability,Positive
+fb_06826,The support team resolved my issue faster than anticipated.,Customer Support,Positive
+fb_06827,Internet speeds exceeded my expectations completely.,Internet Speed,Positive
+fb_06828,The transfer process finished sooner than promised.,Number Portability,Positive
+fb_06829,My complaint was handled better than I could have hoped.,Customer Support,Positive
+fb_06830,The outage was restored much quicker than the estimated time.,Network Outage,Positive
+fb_06831,Call quality turned out to be much better than I anticipated.,Call Quality,Positive
+fb_06832,The roaming experience was smoother than I ever expected.,Roaming,Positive
+fb_06833,Data speeds are faster than what was advertised.,Internet Speed,Positive
+fb_06834,The app loaded quicker than I thought it would.,Mobile App Experience,Positive
+fb_06835,My bill was lower than expected this month.,Billing,Positive
+fb_06836,The 5G coverage expanded faster than they promised.,5G Experience,Positive
+fb_06837,Recharge benefits turned out better than described.,Recharge Plans,Positive
+fb_06838,The streaming quality is better than what competitors offer.,OTT Bundle Services,Positive
+fb_06839,The entire porting process was surprisingly effortless.,Number Portability,Positive
+fb_06840,Activation was seamless and took no effort at all.,SIM Activation,Positive
+fb_06841,The support experience was surprisingly pleasant.,Customer Support,Positive
+fb_06842,Roaming connectivity was effortlessly maintained across three countries.,Roaming,Positive
+fb_06843,The bill payment process is surprisingly straightforward.,Billing,Positive
+fb_06844,The network transition to 5G was seamless for me.,5G Experience,Positive
+fb_06845,"Surprisingly, the app works flawlessly even on my older phone.",Mobile App Experience,Positive
+fb_06846,The recharge process was effortless through the app.,Recharge Plans,Positive
+fb_06847,International call setup was surprisingly easy.,International Calling,Positive
+fb_06848,Switching plans was seamless with no downtime.,Postpaid Plans,Positive
+fb_06849,I am genuinely impressed by how well the network performs indoors.,Network Coverage,Positive
+fb_06850,Pleasantly surprised by the call clarity on this network.,Call Quality,Positive
+fb_06851,Delighted with how the support team handled my complex issue.,Customer Support,Positive
+fb_06852,I was impressed that my data lasted the entire month.,Data Balance,Positive
+fb_06853,The value I get from this plan genuinely impresses me.,Value for Money,Positive
+fb_06854,Impressed by how the network handled the concert crowd.,Network Congestion,Positive
+fb_06855,Pleasantly surprised that the streaming bundle includes premium content.,OTT Bundle Services,Positive
+fb_06856,I am delighted with how quickly messages get delivered now.,SMS Services,Positive
+fb_06857,Impressed that my phone works perfectly with their latest features.,Device Compatibility,Positive
+fb_06858,The provider handled my number transfer professionally and quickly.,Number Portability,Positive
+fb_06859,My complaint was resolved efficiently in a single call.,Customer Support,Positive
+fb_06860,The billing dispute was handled professionally with a full refund.,Billing,Positive
+fb_06861,The outage communication was managed professionally.,Network Outage,Positive
+fb_06862,SIM replacement was handled efficiently at the store.,SIM Activation,Positive
+fb_06863,The international calling setup was handled professionally by support.,International Calling,Positive
+fb_06864,Download speeds consistently exceed what was promised in the plan.,Internet Speed,Positive
+fb_06865,The network coverage has surpassed all my initial doubts.,Network Coverage,Positive
+fb_06866,Service quality exceeded what I was paying for.,Value for Money,Positive
+fb_06867,The plan benefits far exceed what competitors offer at this price.,Pricing,Positive
+fb_06868,OTT content quality exceeded my expectations from a telecom provider.,OTT Bundle Services,Positive
+fb_06869,5G performance surpassed everything I experienced on the old network.,5G Experience,Positive
+fb_06870,The data allowance exceeds what most people would ever need.,Data Balance,Positive
+fb_06871,Number porting worked without a single issue.,Number Portability,Positive
+fb_06872,The roaming service worked flawlessly in every country I visited.,Roaming,Positive
+fb_06873,Zero issues with the activation process from start to finish.,SIM Activation,Positive
+fb_06874,The billing has been accurate without fail for over a year.,Billing,Positive
+fb_06875,Not a single dropped call in three months of use.,Call Quality,Positive
+fb_06876,The app runs perfectly on every device I have tried.,Mobile App Experience,Positive
+fb_06877,SMS delivery has been flawless since I joined this provider.,SMS Services,Positive
+fb_06878,The postpaid plan works exactly as advertised with no hidden costs.,Postpaid Plans,Positive
+fb_06879,The plan costs more than what competitors offer for the same features.,Pricing,Negative
+fb_06880,Coverage is worse than my previous provider in this area.,Network Coverage,Negative
+fb_06881,Speeds are slower than what was advertised.,Internet Speed,Negative
+fb_06882,The support quality has declined compared to last year.,Customer Support,Negative
+fb_06883,My data runs out faster than it used to on the old plan.,Data Balance,Negative
+fb_06884,The app is less responsive than the previous version.,Mobile App Experience,Negative
+fb_06885,Call quality is worse in this area compared to the city.,Call Quality,Negative
+fb_06886,The validity period is shorter than competing plans.,Data Validity,Negative
+fb_06887,Roaming rates are higher than industry average.,Roaming,Negative
+fb_06888,The recharge options are more confusing than before.,Recharge Plans,Negative
+fb_06889,My data quota depleted far sooner than the billing cycle.,Data Balance,Negative
+fb_06890,The validity expired earlier than I was told it would.,Data Validity,Negative
+fb_06891,The call dropped sooner than I could finish my sentence.,Call Quality,Negative
+fb_06892,The network went down again sooner than the last time.,Network Outage,Negative
+fb_06893,My balance hit zero faster than I could track it.,Data Balance,Negative
+fb_06894,I have to restart my phone three times a day to get signal.,Network Coverage,Negative
+fb_06895,Every time I call support I get a different answer.,Customer Support,Negative
+fb_06896,I need to stand by the window to make a phone call.,Network Coverage,Negative
+fb_06897,The app requires me to log in fresh every single time.,Mobile App Experience,Negative
+fb_06898,My messages arrive hours after they were sent.,SMS Services,Negative
+fb_06899,I have to recharge twice a month because data runs out so fast.,Data Balance,Negative
+fb_06900,The bill shows items I never subscribed to.,Billing,Negative
+fb_06901,They keep changing the plan terms without notice.,Postpaid Plans,Negative
+fb_06902,I wait 20 minutes on hold every time I call support.,Customer Support,Negative
+fb_06903,The OTT content buffers even on a 100mbps wifi connection.,OTT Bundle Services,Negative

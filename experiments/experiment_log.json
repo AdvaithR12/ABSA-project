@@ -87,10 +87,10 @@
     "model": "LogisticRegression",
     "hyperparameters": {
       "C": 0.5,
-      "solver": "saga",
+      "solver": "lbfgs",
       "penalty": "l2",
       "max_iter": 3000,
-      "class_weight": null
+      "class_weight": "balanced"
     },
     "dataset_version": "v2 (13,100 samples)",
     "features": "TF-IDF bigrams + SMOTE + aspect token",
@@ -107,25 +107,25 @@
       }
     },
     "results": {
-      "best_cv_f1": 0.8410,
-      "train_f1": 0.8797,
-      "val_f1": 0.8379,
-      "test_f1": 0.8443,
-      "neutral_recall": 0.858,
-      "neutral_f1": 0.887
+      "best_cv_f1": 0.8430,
+      "train_f1": 0.8727,
+      "val_f1": 0.8419,
+      "test_f1": 0.8490,
+      "neutral_recall": 0.840,
+      "neutral_f1": 0.876
     },
-    "notes": "Best model. C=0.5 with saga solver. Slight improvement over default. Published as best_sentiment_model.pkl."
+    "notes": "Best model. C=0.5 with lbfgs solver. Split by feedback_id (no data leakage). Published as best_sentiment_model.pkl."
   },
   {
     "experiment_id": "exp_006",
     "date": "2025-05-22",
     "description": "All models retrained on v2 dataset for fair comparison",
     "models_compared": [
-      {"name": "Tuned LR", "test_f1": 0.8443, "train_time_s": 6.75, "inference_time_s": 0.0017, "memory_mb": 11.57},
-      {"name": "Naive Bayes", "test_f1": 0.8395, "train_time_s": 0.014, "inference_time_s": 0.002, "memory_mb": 1.38},
-      {"name": "SGD-SVM", "test_f1": 0.8264, "train_time_s": 0.55, "inference_time_s": 0.0012, "memory_mb": 0.53}
+      {"name": "Tuned LR", "test_f1": 0.8490, "train_time_s": 3.0, "inference_time_s": 0.0016, "memory_mb": 11.50},
+      {"name": "Naive Bayes", "test_f1": 0.8463, "train_time_s": 0.012, "inference_time_s": 0.0016, "memory_mb": 1.37},
+      {"name": "SGD-SVM", "test_f1": 0.8525, "train_time_s": 0.62, "inference_time_s": 0.0012, "memory_mb": 0.54}
     ],
-    "notes": "Tuned LR wins on F1. NB is close and 480x faster to train. SGD overfits most."
+    "notes": "SGD-SVM wins on test F1. Tuned LR close second. Split by feedback_id (no data leakage)."
   },
   {
     "experiment_id": "exp_007",

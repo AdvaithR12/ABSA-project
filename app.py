@@ -426,7 +426,7 @@ def render_sidebar():
 
         # Model Summary
         current_model_name = st.session_state.get('selected_model', 'Tuned Logistic Regression')
-        current_f1 = available.get(current_model_name, {}).get('f1', '84.4%')
+        current_f1 = available.get(current_model_name, {}).get('f1', '84.9%')
 
         st.markdown(f"""
         <div class="model-summary-title">MODEL SUMMARY</div>
@@ -453,7 +453,7 @@ def render_sidebar():
 def page_dashboard(model, vectorizer):
     selected_model = st.session_state.get('selected_model', 'Tuned Logistic Regression')
     available = get_available_models()
-    current_f1 = available.get(selected_model, {}).get('f1', '84.4%')
+    current_f1 = available.get(selected_model, {}).get('f1', '84.9%')
 
     st.markdown('<div class="main-title">Dashboard</div>', unsafe_allow_html=True)
     st.markdown('<div class="main-subtitle">Get actionable insights from customer feedback</div>', unsafe_allow_html=True)
@@ -823,29 +823,29 @@ def page_batch_analysis(model, vectorizer):
 def page_insights(model, vectorizer):
     selected_model = st.session_state.get('selected_model', 'Tuned Logistic Regression')
     available = get_available_models()
-    current_f1 = available.get(selected_model, {}).get('f1', '84.4%')
+    current_f1 = available.get(selected_model, {}).get('f1', '84.9%')
 
     # Model-specific performance data
     model_perf = {
         'Tuned Logistic Regression': {
-            'metrics': [('Weighted F1', '84.4%'), ('Precision', '84.6%'), ('Recall', '84.4%'), ('Train F1', '88.0%'), ('Val F1', '83.8%')],
-            'classes': [('Negative', '78.9%', '84.2%', '81.5%'), ('Neutral', '91.7%', '85.8%', '88.7%'), ('Positive', '83.0%', '83.1%', '83.1%')],
-            'config': 'Logistic Regression (C=0.5, SAGA, L2)'
+            'metrics': [('Weighted F1', '84.9%'), ('Precision', '85.1%'), ('Recall', '84.8%'), ('Train F1', '87.3%'), ('Val F1', '84.2%')],
+            'classes': [('Negative', '80.1%', '85.0%', '82.5%'), ('Neutral', '91.6%', '84.0%', '87.6%'), ('Positive', '83.7%', '85.4%', '84.5%')],
+            'config': 'Logistic Regression (C=0.5, lbfgs, L2)'
         },
         'Naive Bayes': {
-            'metrics': [('Weighted F1', '84.0%'), ('Precision', '84.7%'), ('Recall', '83.8%'), ('Train F1', '86.4%'), ('Val F1', '84.1%')],
-            'classes': [('Negative', '77.1%', '85.6%', '81.1%'), ('Neutral', '96.4%', '81.3%', '88.2%'), ('Positive', '80.6%', '84.5%', '82.5%')],
+            'metrics': [('Weighted F1', '84.6%'), ('Precision', '85.3%'), ('Recall', '84.5%'), ('Train F1', '86.7%'), ('Val F1', '82.7%')],
+            'classes': [('Negative', '79.6%', '86.5%', '82.9%'), ('Neutral', '95.5%', '79.9%', '87.0%'), ('Positive', '81.2%', '87.0%', '84.0%')],
             'config': 'MultinomialNB (alpha=0.5, SMOTE)'
         },
         'SGD-SVM': {
-            'metrics': [('Weighted F1', '82.6%'), ('Precision', '82.7%'), ('Recall', '82.6%'), ('Train F1', '90.9%'), ('Val F1', '81.2%')],
-            'classes': [('Negative', '78.8%', '81.6%', '80.2%'), ('Neutral', '88.2%', '84.7%', '86.4%'), ('Positive', '81.0%', '81.5%', '81.3%')],
+            'metrics': [('Weighted F1', '85.3%'), ('Precision', '85.4%'), ('Recall', '85.2%'), ('Train F1', '90.1%'), ('Val F1', '84.9%')],
+            'classes': [('Negative', '82.2%', '83.9%', '83.0%'), ('Neutral', '90.5%', '85.4%', '87.9%'), ('Positive', '83.4%', '86.2%', '84.8%')],
             'config': 'SGDClassifier (modified_huber, balanced)'
         },
         'DistilBERT': {
-            'metrics': [('Weighted F1', '96.1%'), ('Precision', '96.1%'), ('Recall', '96.1%'), ('Train F1', '—'), ('Val F1', '95.9%')],
-            'classes': [('Negative', '93.4%', '98.2%', '95.7%'), ('Neutral', '97.9%', '95.0%', '96.4%'), ('Positive', '97.0%', '95.2%', '96.1%')],
-            'config': 'DistilBERT (fine-tuned, 4 epochs, lr=2e-5)'
+            'metrics': [('Weighted F1', '95.6%'), ('Precision', '95.7%'), ('Recall', '95.6%'), ('Train F1', '97.0%'), ('Val F1', '96.0%')],
+            'classes': [('Negative', '93.9%', '97.9%', '95.9%'), ('Neutral', '96.3%', '94.7%', '95.5%'), ('Positive', '96.7%', '94.5%', '95.6%')],
+            'config': 'DistilBERT (fine-tuned, 3 epochs, lr=2e-5)'
         }
     }
 

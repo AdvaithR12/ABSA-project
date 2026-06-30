@@ -1,12 +1,15 @@
 """
 Aspect detection module for the ABSA system.
-Handles both keyword-based and ML-based aspect identification.
+Handles both keyword-based and ML-based aspect identification,
+clause splitting, and aspect-relevant sentence extraction.
 """
 
 import re
 import os
 import joblib
+from nltk.tokenize import sent_tokenize
 from src.preprocessing import preprocess_text
+from src.spell_correction import correct_spelling
 from src.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -44,6 +47,8 @@ _ml_models = None
 def identify_aspects_keyword(text):
     """Identify aspects using keyword regex matching.
     
+    Applies spell correction before matching to handle typos.
+    
     Args:
         text: Raw feedback text.
     
@@ -51,10 +56,11 @@ def identify_aspects_keyword(text):
         list: Detected aspect names, or ['General'] if none found.
     """
     text_lower = text.lower()
+    text_corrected = correct_spelling(text_lower)
     identified = []
     for aspect, patterns in ASPECT_KEYWORDS.items():
         for pattern in patterns:
-            if re.search(pattern, text_lower):
+            if re.search(pattern, text_corrected):
                 identified.append(aspect)
                 break
     return identified if identified else ['General']
@@ -100,6 +106,9 @@ def identify_aspects_ml(text, threshold=0.4):
     Returns:
         list: Detected aspect names.
     """
+    if not text or not isinstance(text, str) or not text.strip():
+        return ['General']
+
     models = _load_ml_models()
     if models is None:
         return identify_aspects_keyword(text)
@@ -123,3 +132,79 @@ def identify_aspects_ml(text, threshold=0.4):
         combined = list(dict.fromkeys(keyword_aspects + ml_aspects))
         return combined
     return keyword_aspects
+
+
+# --- Clause Splitting ---
+def split_into_clauses(text):
+    """Split text into clauses on sentence boundaries AND contrastive conjunctions.
+    
+    Handles: but, however, though, although, yet, while, whereas, nevertheless, nonetheless
+    
+    Args:
+        text: Raw feedback text.
+    
+    Returns:
+        list: List of clause strings (minimum 3 words each).
+    """
+    sentences = sent_tokenize(text)
+    clauses = []
+    clause_splitters = r'\b(but|however|though|although|yet|while|whereas|nevertheless|nonetheless|on the other hand)\b'
+    for sent in sentences:
+        parts = re.split(clause_splitters, sent, flags=re.IGNORECASE)
+        for part in parts:
+            part = part.strip()
+            if part and part.lower() not in ('but', 'however', 'though', 'although', 'yet', 'while', 'whereas', 'nevertheless', 'nonetheless', 'on the other hand'):
+                if len(part.split()) >= 3:
+                    clauses.append(part)
+    return clauses if clauses else [text]
+
+
+def get_relevant_sentences(raw_text, aspect):
+    """Extract clauses/sentences that mention the given aspect.
+    
+    If only one clause matches and the text has contrastive structure,
+    includes the adjacent clause to preserve full sentiment context.
+    
+    Args:
+        raw_text: Full feedback text.
+        aspect: Aspect name to look for.
+    
+    Returns:
+        str: Concatenated relevant clauses, or full text if none match.
+    """
+    clauses = split_into_clauses(raw_text)
+    patterns = ASPECT_KEYWORDS.get(aspect, [])
+    relevant = []
+    relevant_indices = []
+    
+    for idx, clause in enumerate(clauses):
+        clause_lower = clause.lower()
+        clause_corrected = correct_spelling(clause_lower)
+        for pattern in patterns:
+            if re.search(pattern, clause_corrected):
+                relevant.append(clause)
+                relevant_indices.append(idx)
+                break
+    
+    # If we found the aspect in one clause but the text has contrastive structure,
+    # include the adjacent clause (it likely refers to the same topic implicitly)
+    if len(relevant) == 1 and len(clauses) > 1:
+        idx = relevant_indices[0]
+        if idx + 1 < len(clauses):
+            next_clause = clauses[idx + 1]
+            # Check if next clause mentions a DIFFERENT aspect explicitly
+            matches_other_aspect = False
+            for other_aspect, other_patterns in ASPECT_KEYWORDS.items():
+                if other_aspect == aspect:
+                    continue
+                for p in other_patterns:
+                    if re.search(p, next_clause.lower()):
+                        matches_other_aspect = True
+                        break
+                if matches_other_aspect:
+                    break
+            # Include it if it doesn't belong to another aspect
+            if not matches_other_aspect:
+                relevant.append(next_clause)
+    
+    return ' '.join(relevant) if relevant else raw_text

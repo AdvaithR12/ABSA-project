@@ -52,8 +52,8 @@ Raw Feedback
     └── Results: [{aspect, sentiment, confidence}, ...]
 ```
 
-**Sentiment Model:** Tuned Logistic Regression (C=0.5, saga solver, L2 penalty)
-- Test F1: **84.4%** (weighted)
+**Sentiment Model:** Tuned Logistic Regression (C=0.5, lbfgs solver, L2 penalty)
+- Test F1: **84.9%** (weighted)
 - Trained on 13,100 aspect-level samples across 22 categories
 
 ### Pipeline 2: Fine-tuned DistilBERT
@@ -73,7 +73,7 @@ Raw Feedback
 ```
 
 **DistilBERT Model:** Fine-tuned `distilbert-base-uncased` for 3-class sentiment
-- Test F1: **95.7%** (weighted)
+- Test F1: **95.6%** (weighted)
 - Processes raw text directly (no TF-IDF preprocessing needed)
 - No VADER/domain corrections required — the transformer handles negation and implicit sentiment natively
 - Requires `torch` and `transformers` packages
@@ -302,10 +302,10 @@ jupyter notebook notebooks/models.ipynb
 
 | Model | Test F1 | Train Time | Inference Time | Memory |
 |-------|---------|-----------|---------------|--------|
-| **DistilBERT (fine-tuned)** | **0.957** | ~25min (GPU) | ~50ms | 257 MB |
-| Tuned Logistic Regression | 0.844 | 6.75s | 0.002s | 11.6 MB |
-| Naive Bayes | 0.840 | 0.01s | 0.002s | 1.4 MB |
-| SGD-SVM | 0.826 | 0.55s | 0.001s | 0.5 MB |
+| **DistilBERT (fine-tuned)** | **0.956** | ~25min (GPU) | ~50ms | 257 MB |
+| SGD-SVM | 0.853 | 0.62s | 0.001s | 0.5 MB |
+| Tuned Logistic Regression | 0.849 | 3.0s | 0.002s | 11.5 MB |
+| Naive Bayes | 0.846 | 0.01s | 0.002s | 1.4 MB |
 
 DistilBERT achieves the highest accuracy but requires GPU for training and has slower inference. Tuned LR is the default model — best balance of accuracy, speed, and no GPU requirement.
 
