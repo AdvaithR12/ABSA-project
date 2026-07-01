@@ -40,6 +40,7 @@ models/versions/
 
 # Data - keep raw dataset for reproducibility
 data/processed/*.csv
+!data/processed/absa_dataset_cleaned.csv
 data/dataGenerator/raw_batches/
 
 # Outputs
