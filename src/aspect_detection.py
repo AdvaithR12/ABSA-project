@@ -35,7 +35,7 @@ _deberta_config = None
 _ml_models = None
 
 # Default confidence threshold
-DEFAULT_THRESHOLD = 0.5
+DEFAULT_THRESHOLD = 0.3
 
 
 # ============================================================
